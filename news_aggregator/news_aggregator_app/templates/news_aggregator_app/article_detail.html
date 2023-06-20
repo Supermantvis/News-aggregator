@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}{{ newsarticle.title }} | {{ block.super }}{% endblock title %}
+{% block content %}
+<ul>
+    <h3>
+        <a href={{ newsarticle.source_url }}>{{ newsarticle.title }}</a>
+    </h3>
+    <a href={{ newsarticle.image }}>
+        <img class="article-list-img "src="{{ newsarticle.image }}">
+    </a>
+    <p>
+        {% if newsarticle.description|length > 249 %}
+            {{ newsarticle.description|slice:248 }}...
+        {% else %}
+            {{ newsarticle.description }}
+        {% endif %}
+    </p>
+    <p>Published: {{ newsarticle.published_at|date:"Y-m-d" }}</p>
+    {% if newsarticle.category.count > 1 %}
+        <p>Categories: {{ newsarticle.display_category }}</p>
+    {% else %}
+        <p>Category: {{ newsarticle.display_category }}</p>
+    {% endif %}
+    <p>Source: {{ newsarticle.source_name }}</p>
+</ul>
+<h3>Comments:</h3>
+{% if user.is_authenticated %}
+    <form method="post" action="{{ request.path }}">
+        <h3>Leave your comment</h3>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Post</button>
+    </form>
+{% else %}
+    <p class="box box-info">Only order owner and staff can comment.</p>
+    <p class="box box-info">If you want to write a comment, you have to login or <a href={% url 'signup' %}>sign up</a>.</p>
+{% endif %}
+{% if newsarticle.comments.count > 0 %}
+    <ul>
+        {% for comment in newsarticle.comments.all %}
+            <li>{{ comment.created_at|date:"Y-m-d" }} by
+                {{ comment.user }}<br>
+                {{ comment.content }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3>No comments on this article yet.</h3>
+{% endif %}
+{% endblock content %}
+
+
+<h2>Comments</h2>

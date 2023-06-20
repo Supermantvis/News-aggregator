@@ -1,0 +1,23 @@
+html { 
+    font-family: sans-serif; 
+    font-size: 125%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+header {
+    background-color: #c0ffb0;
+}
+/* .list-item-container {
+    background-color: rgb(251, 251, 225);
+} */
+.article-list-img {
+    max-width: 20pc;
+    border-radius: 25px;
+    padding: 5px;
+
+}

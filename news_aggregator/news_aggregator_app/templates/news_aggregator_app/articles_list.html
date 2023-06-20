@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Articles in {{ block.super }}{% endblock title %}
+{% block content %}
+<ul>
+    {% for article in newsarticle_list %}
+    <div class="list-container">
+        <h3>
+            <a href={{ article.source_url }}>{{ article.title }}</a>
+        </h3>
+        <a href={{ article.image }}>
+            <img class="article-list-img "src="{{ article.image }}">
+        </a>
+        <p>Source: {{ article.source_name }}</p>
+        <a href="{% url 'article_detail' article.pk %}"><button>View details...</button></a>
+    </div>
+    {% endfor %}
+</ul>
+{% endblock content %}

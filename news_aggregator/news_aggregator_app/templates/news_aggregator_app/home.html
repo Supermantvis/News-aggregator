@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Welcome to {{ block.super }}{% endblock title %}
+{% block content %}
+  <h3>You can choose from:</h3>
+  <ul>
+      <li><strong>Categories:</strong> {{ num_categories }} </li>
+      <li><strong>Number of articles:</strong> {{ num_articles }} </li>
+      <li><strong>Number of visits:</strong> {{ num_visits }} </li>
+  </ul>
+{% endblock content %}
