@@ -10,6 +10,7 @@ from django.views import generic
 from django.urls import reverse
 from . models import Category, NewsArticle, Comment
 from . forms import ArticleCommentForm
+from . scraper import scraper
 
 
 def home(request):
@@ -27,7 +28,6 @@ def home(request):
         'num_categories': num_categories,
         'num_visits': num_visits,
     }
-
     return render(request, 'news_aggregator_app/home.html', context)
 
 
@@ -36,6 +36,8 @@ class NewsArticleListView(generic.ListView):
     paginate_by = 5
     template_name = 'news_aggregator_app/articles_list.html'
     ordering = ['published_at']
+
+    # scraper()
 
     def get_queryset(self) -> QuerySet[Any]:
         qs = super().get_queryset()
@@ -56,7 +58,6 @@ class NewsArticleDetailView(generic.edit.FormMixin, generic.DetailView):
 
     def get_initial(self) -> Dict[str, Any]:
         initial = super().get_initial()
-        initial['article'] = self.get_object()
         initial['user'] = self.request.user
         return initial
 
@@ -69,11 +70,11 @@ class NewsArticleDetailView(generic.edit.FormMixin, generic.DetailView):
             return self.form_invalid(form)
         
     def form_valid(self, form: Any) -> HttpResponse:
-        form.article = self.get_object()
-        form.user = self.request.user
+        form.instance.article = self.get_object()  # Associate the comment with the viewed article
+        form.instance.user = self.request.user
         form.save()
         messages.success(self.request, _('Comment posted!'))
         return super().form_valid(form)
 
     def get_success_url(self) -> str:
-        return reverse('article_detail', kwargs={'pk':self.get_object().pk})
+        return reverse('article_detail', kwargs={'pk': self.get_object().pk})

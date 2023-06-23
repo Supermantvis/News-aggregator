@@ -21,3 +21,41 @@ header {
     padding: 5px;
 
 }
+ul.paginator {
+    list-style: none;
+    padding-inline-start: 0.5rem;
+}
+.paginator {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+.paginator a, .paginator .current {
+    text-decoration: none;
+    padding: 0 0.5rem;
+    border: 1px solid #aacc99;
+    background-color: #e8ffd0;
+    border-radius: 0.5rem;
+}
+.box {
+    padding: 0.2rem 0.5rem;
+    margin: 0.5rem;
+    border: 1px solid #999999;
+    border-radius: 0.5rem;
+}
+.box-info {
+    background-color: #99ccff;
+}
+.box-warning {
+    background-color: #ffcc99;
+}
+.box-error {
+    background-color: #ff9999;
+}
+.box-success {
+    background-color: #c0ffb0;
+}
+.box-debug {
+    background-color: #eeeeee;
+}

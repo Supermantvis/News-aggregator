@@ -9,7 +9,7 @@ from . import models
 class ArticleCommentForm(forms.ModelForm):
     class Meta:
         model = models.Comment
-        fields = ('article', 'content', 'user')
+        fields = ('content', 'user')
         widgets = {
             'user': forms.HiddenInput(),
             'created_at': forms.HiddenInput(),
